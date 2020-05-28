@@ -1,17 +1,19 @@
+
 #ifndef CL_BASE_H //см. 5.7 методичку
 #define CL_BASE_H
 #include<vector>
 #include<string>
+#include <list>
 class cl_base//см. п.8.3
 {
 protected:
-	 /*props*/
-	/*наименование объекта;*/
+	/*props*/
+	  /*наименование объекта;*/
 	std::string name;
 	/*указатель на головной объект на дереве иерархии объектов;*/
 	cl_base* head;
 	/*перечень указателей на иерархически подчиненных объектов (объектов-потомков).*/
-	std::vector<cl_base*> children;
+	std::list<cl_base*> children;
 	/*состояние объекта*/
 	int state = 0;
 	/*methods*/
@@ -25,41 +27,37 @@ public:
 	/*конструктор объекта с параметрами - имя объекта, указатель на головной объект ,состояние*/
 	cl_base(std::string, cl_base*, int);
 	/*получения имени объекта*/
-	std::string  get_name();
+	std::string const get_name();
 	/*присвоения имени объекту*/
 	void set_name(std::string);
-
 
 	/*получения указателя на головной объект*/
 	cl_base* const get_head();
 	/*переопределения головного объекта*/
 	void set_head(cl_base*);
 
-
 	/*получения номера состояния объекта*/
 	int const get_state();
 	/*определения номера состояния объекта*/
 	void set_state(int);
 
-
 	/*класс принадлежности*/
-	 int  get_class();
+	virtual  int const get_class();
 	//список потомков
-	std::vector<cl_base*> get_children();
+	std::list< cl_base* >  get_children();
 	/*добавление нового объекта потомка*/
 	void add_child(cl_base* obj);
 	/*получения указателя на объект потомок по имени объекта*/
-	cl_base*  get_child(std::string);
+	cl_base* const get_child(std::string);
 	/*получения количества подчиненных объектов*/
 	size_t const child_count();
 	/*получения указателя на объект потомок по индексу в списке подчиненных объектов*/
-	cl_base*  get_child(size_t);
+	cl_base* const get_child(size_t);
 	/*удаления объекта потомка (удалить все подчиненные объекты по иерархии)*/
 	void delete_child(cl_base*);
 	//-----------------
-/*получения указателя на объект по координате на дереве объектов*/
-	cl_base* get_from_tree(int);
-
+	  /*получения указателя на объект по координате на дереве объектов*/
+	cl_base* get_from_tree(std::string);
 
 	/*установки связи между сигналом и обработчиком*/
 	void set_signal(/*???*/);
@@ -70,9 +68,6 @@ public:
 	void emit_signal(void*, std::string);
 
 };
-
-
-
 
 
 
