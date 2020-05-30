@@ -19,6 +19,7 @@ void cl_application::bild_tree_objects()
 	string obj_name;
 	cin >> obj_name;
 	name = obj_name;
+	state = 1;
 	while (1)
 	{
 		string parent_name;
