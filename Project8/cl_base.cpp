@@ -22,6 +22,8 @@ int const cl_base::get_state() { return state; }
 
 void cl_base::set_state(int state) { this->state = state; }
 
+int const cl_base::get_class() { return 0; }
+
 std::vector<cl_base*> cl_base::get_children() { return this->children; }
 
 void cl_base::add_child(cl_base* obj) { children.push_back(obj); }
