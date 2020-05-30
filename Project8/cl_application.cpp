@@ -4,6 +4,8 @@
 #include "cl_application.h"
 #include <queue>
 #include<iostream>
+#include <algorithm>
+#include <list>
 using namespace std;
 
 
@@ -69,4 +71,4 @@ int cl_application::exec_app()
 
 	return 0;
 }
-int cl_application::get_class() { return 1; }
+int const  cl_application::get_class() { return 1; }
