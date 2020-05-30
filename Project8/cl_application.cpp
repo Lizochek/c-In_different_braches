@@ -1,6 +1,9 @@
-
 #include "cl_base.h"
 #include "cl_class2.h"
+#include "cl_class3.h"
+#include "cl_class4.h"
+#include "cl_class5.h"
+#include "cl_class6.h"
 #include "cl_application.h"
 #include <queue>
 #include <iostream>
@@ -15,6 +18,7 @@ void cl_application::bild_tree_objects()
     string obj_name;
     cin >> obj_name;
     name = obj_name;
+    state = 1;
     while (1)
     {
         string path;
