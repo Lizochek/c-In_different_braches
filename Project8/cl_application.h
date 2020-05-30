@@ -6,9 +6,8 @@ class cl_application : public cl_base
 {
 public:
 	cl_application();
-
 	void bild_tree_objects() ;
 	int exec_app();
-	int get_class() ;
+	int const get_class() override;
 };
 #endif

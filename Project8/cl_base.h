@@ -43,7 +43,7 @@ public:
 
 
 	/*класс принадлежности*/
-	 int  get_class();
+	 int const virtual get_class();
 	//список потомков
 	std::vector<cl_base*> get_children();
 	/*добавление нового объекта потомка*/

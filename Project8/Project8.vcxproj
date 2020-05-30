@@ -147,6 +147,10 @@
     <ClCompile Include="cl_class2.h" />
     <ClCompile Include="run.bat" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cl_class3.h" />
+    <ClInclude Include="cl_class4.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

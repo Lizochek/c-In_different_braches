@@ -1,6 +1,8 @@
 //см. 8.5 методичку
 #include "cl_base.h"
 #include "cl_class2.h"
+#include "cl_class3.h"
+#include "cl_class4.h"
 #include "cl_application.h"
 #include <queue>
 #include<iostream>
@@ -71,4 +73,4 @@ int cl_application::exec_app()
 
 	return 0;
 }
-int const  cl_application::get_class() { return 1; }
+int const cl_application::get_class() { return 1; }
