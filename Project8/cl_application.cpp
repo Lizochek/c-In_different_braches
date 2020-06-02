@@ -16,6 +16,11 @@ using namespace std;
 cl_application::cl_application() : cl_base::cl_base() {}
 cl_base* mas[10][10];//вспомогательный массив
 
+void signal(string& s){s="In progress";}
+void signal_2(string& s){}
+void hendler_1(cl_base* p_ob, std::string& s);
+void hendler_2(cl_base* p_ob, std::string& s);
+
 void cl_application::bild_tree_objects()
 {
 	/*
@@ -28,28 +33,23 @@ set_connect ( SIGNAL_D ( signal_to_ob_3 ),   p_ob_3,
 	for (int i = 0; i < 10; i++)
 		for (int j = 0; j < 10; j++) {
 			char ch;
-			cin >> ch;
+			cin >> ch;    
 			mas[i][j] = new cl_base();
-			(*mas[i][j]).set_value(ch);
+			(*mas[i][j]).set_value((ch=='1'?"1":"0"));
 		}
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
 			if (i > 0)
 			{
 				mas[i][j]->add_child(mas[i - 1][j]);
-				mas[i][j]->set_connect(SIGNAL_D(mas[i][j]->signal_1), mas[i - 1][j],
-					HENDLER_D(this->hendler_2));
 			}
 			if (j < 9) {
 				mas[i][j]->add_child(mas[i][j + 1]);
-				mas[i][j]->set_connect(SIGNAL_D(mas[i][j]->signal_1), mas[i][j + 1],
-					HENDLER_D(this->hendler_2));
+
 			}
 			if (i < 9)
 			{
 				mas[i][j]->add_child(mas[i + 1][j]);
-				mas[i][j]->set_connect(SIGNAL_D(mas[i][j]->signal_1), mas[i + 1][j],
-					HENDLER_D(this->hendler_2));
 			}
 
 		}
@@ -70,8 +70,8 @@ int  cl_application::exec_app()
 {
 	for (int i = 0; i < 10; i++)
 	{
-		if (mas[i][0]->get_value() == '1') {
-			string filler = "";
+		if (mas[i][0]->get_value()== "1") {
+			string filler = "0";
 			hendler_2(mas[i][0], filler);
 			break;
 		}
@@ -80,26 +80,31 @@ int  cl_application::exec_app()
 	{
 		for (int j = 0; j < 10; j++)
 		{
-			cout << mas[i][j]->get_value();
+			cout << (mas[i][j]->get_value());
 		}
 		cout << endl;
 	}
-
+    
+    for (int i = 0; i < 10; i++)
+		for (int j = 0; j < 10; j++) 
+			delete mas[i][j];
+        
 	return 0;
 }
 int const  cl_application::get_class() { return 1; }
 
-void cl_application::hendler_1(cl_base* p_ob, std::string& s) {
-	int c = 0;
-
+void hendler_1(cl_base* p_ob, std::string& s) {
+    int c=0;
 	for (cl_base* child : p_ob->get_children())
-		c += (child->get_value() == '1');
-	if (c) emit_signal(SIGNAL_D(p_ob->signal_1), s);
-	else emit_signal(SIGNAL_D(p_ob->signal_2), s);
+		if ( child->get_value()== "1")
+        {
+            p_ob->set_connect(SIGNAL_D(signal), child, HENDLER_D(hendler_2));
+            c++;
+        }
+     if(c) p_ob->emit_signal(SIGNAL_D(signal), p_ob->get_value());
+     else p_ob->emit_signal(SIGNAL_D(signal_2), p_ob->get_value());
 }
-void cl_application::hendler_2(cl_base* p_ob, std::string& s) {
-	if (p_ob->get_value() != '1') return;
+void hendler_2(cl_base* p_ob, std::string& s) {
 	hendler_1(p_ob, s);
-	p_ob->set_value('F');
-
+	p_ob->set_value("F");
 }

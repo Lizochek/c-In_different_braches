@@ -1,4 +1,3 @@
-
 #ifndef CL_CLASS2 //см. 5.7 методичку
 #define CL_CLASS2
 #include "cl_base.h"

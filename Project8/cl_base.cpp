@@ -99,28 +99,50 @@ void cl_base::set_connect(void (*p_signal) (string&),
 	p_value->p_hendler = p_hendler;
 	connects.insert({ p_signal, p_value });
 }
+
+void cl_base::delete_connect(void (*s_ignal) (std::string&),
+		cl_base* p_ob_hendler,
+		void (*h_endler) (cl_base* p_pb, std::string&))
+{
+    void (*p_key) (string&);
+    o_sh* p_value;
+    if (connects.size() > 0) {
+		it_connects = connects.begin();
+
+		while (it_connects != connects.end()) {
+			p_key = it_connects->first;
+			p_value = it_connects->second;
+
+			if ((p_key) == s_ignal &&
+				(p_value->p_cl_base) == p_ob_hendler &&
+				(p_value->p_hendler) == h_endler) break;
+			//83-97 ищем такую запись, чтобы удалить
+
+			it_connects++;
+		}
+        if(it_connects==connects.end()) return;
+        connects.erase(it_connects);
+	}
+}
+
 void cl_base::emit_signal(void (*s_ignal) (string&), string& s_command)
 {
+    (s_ignal)(s_command);
+    
 	void  (*p_hendler) (cl_base * p_ob, string&);
 	//------------------------------------------------------------------
 	if (connects.empty()) return;
 	if (connects.count(s_ignal) == 0) return;
 
-	(s_ignal)(s_command);//todo:подумать о том,чтобы вызывать ф-цию в начале работы метода
-
 	it_connects = connects.begin();
 
 	while (it_connects != connects.end()) {
 		if ((it_connects->first) == s_ignal) {
-
 			p_hendler = it_connects->second->p_hendler;
 			(p_hendler)(it_connects->second->p_cl_base, s_command);
 		}
 		it_connects++;
 	}
 }
-char cl_base::get_value() { return value; }
-void cl_base::set_value(char s) { value = s; }
-void cl_base::signal_1(std::string& direction){}
-void cl_base::signal_2(std::string& s){}
-
+string& cl_base::get_value() { return value; }
+void cl_base::set_value(string s) { value = s; }

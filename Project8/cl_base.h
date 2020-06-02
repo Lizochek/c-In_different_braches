@@ -80,13 +80,13 @@ private:
 
 	std::multimap < void (*) (std::string&), o_sh* > connects;
 	std::multimap < void (*) (std::string&), o_sh* > ::iterator  it_connects;
-	char value;
+	std::string value;
+
+    
 public:
-	void signal_1(std::string&);
-	void signal_2(std::string&);
 	
-	char get_value();
-	void set_value(char);
+	std::string& get_value();
+	void set_value(std::string);
 	
 	
 
