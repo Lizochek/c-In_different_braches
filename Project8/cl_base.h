@@ -1,8 +1,8 @@
-
 #ifndef CL_BASE_H //см. 5.7 методичку
 #define CL_BASE_H
-#include<vector>
-#include<string>
+#include <vector>
+#include <map>
+#include <string>
 #include <list>
 class cl_base//см. п.8.3
 {
@@ -60,12 +60,35 @@ public:
 	cl_base* get_from_tree(std::string);
 
 	/*установки св€зи между сигналом и обработчиком*/
-	void set_signal(/*???*/);
+	void set_connect(void (*s_ignal) (std::string&),
+		cl_base* p_ob_hendler,
+		void (*h_endler) (cl_base* p_pb, std::string&));
 	/*удалени€ св€зи между сигналом и обработчиком*/
-	void delete_signal(/*???*/);
+	void delete_connect(void (*s_ignal) (std::string&),
+		cl_base* p_ob_hendler,
+		void (*h_endler) (cl_base* p_pb, std::string&));
 	/*выдачи сигнала и передачи текстового сообщени€*/
 	/*ќсобо обратить внимание на реализацию сигналов и обработчиков. ѕри выдаче сигнала (вызове метода emit_signal) в качестве аргументов передаютс€ указатель на метод сигнала и строкова€ переменна содержаща€ определенное сообщение. ѕо реализованному алгоритму метод сигнала вызываетс€ один раз и по одному разу все обработчики, св€занные с данным сигналом. —трокова€ переменна€ методу сигнала передаетс€ по ссылке и его содержимое может быть отредактировано алгоритмом реализации метода сигнала. “а-же строкова€ переменна€ обработчикам передаетс€ по значению. “ак обеспечиваетс€ передача одинакового сообщени€ всем обработчикам при выдаче сигнала.*/
-	void emit_signal(void*, std::string);
+
+	void emit_signal(void (*s_ignal) (std::string&), std::string& s_command);
+	
+private:
+	struct o_sh {
+		cl_base* p_cl_base;
+		void   (*p_hendler) (cl_base* p_ob, std::string&);
+	};
+
+	std::multimap < void (*) (std::string&), o_sh* > connects;
+	std::multimap < void (*) (std::string&), o_sh* > ::iterator  it_connects;
+	char value;
+public:
+	void signal_1(std::string&);
+	void signal_2(std::string&);
+	
+	char get_value();
+	void set_value(char);
+	
+	
 
 };
 
