@@ -11,11 +11,10 @@ public:
     
     static void signal(std::string& s)  
     {
-        s+="class2"+this->get_name();
     }
     static void handler(cl_base* p_ob, std::string& s)  
     {
-        std::cout<<"class2 handler s: "<<s<<std::endl;
+        std::cout<<std::endl<<"Signal to "<<p_ob->get_name()<<" Text: "<<s;
     }
 };
 

@@ -128,7 +128,7 @@ void cl_base::delete_connect(void (*s_ignal) (std::string&),
 void cl_base::emit_signal(void (*s_ignal) (string&), string& s_command)
 {
     (s_ignal)(s_command);
-    
+    s_command=this->get_name()+" -> "+s_command;
 	void  (*p_hendler) (cl_base * p_ob, string&);
 	//------------------------------------------------------------------
 	if (connects.empty()) return;

@@ -6,15 +6,14 @@ class cl_class3 :public cl_base
 {
 public:
     cl_class3(std::string name, int state) : cl_base::cl_base(name, nullptr, state) {}
-    int const get_class() override { return 2; }
+    int const get_class() override { return 3; }
     
     static void signal(std::string& s)  
     {
-        s+="class3"+this->get_name();
     }
     static void handler(cl_base* p_ob, std::string& s)  
     {
-        std::cout<<"class3 handler s: "<<s<<std::endl;
+        std::cout<<std::endl<<"Signal to "<<p_ob->get_name()<<" Text: "<<s;
     }
 };
 #endif
