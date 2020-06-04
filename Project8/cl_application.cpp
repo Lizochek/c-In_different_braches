@@ -14,12 +14,7 @@
 using namespace std;
 
 cl_application::cl_application() : cl_base::cl_base() {}
-cl_base* mas[10][10];//вспомогательный массив
 
-void signal(string& s){s="In progress";}
-void signal_2(string& s){}
-void hendler_1(cl_base* p_ob, std::string& s);
-void hendler_2(cl_base* p_ob, std::string& s);
 
 void cl_application::bild_tree_objects()
 {
@@ -93,16 +88,26 @@ int  cl_application::exec_app()
 }
 int const  cl_application::get_class() { return 1; }
 
+void cl_application::signal(std::string& s)  
+{
+    s+="class1"+this->get_name();
+}
+    
+void cl_application::handler(cl_base* p_ob, std::string& s)  
+{
+    std::cout<<"class1 handler s: "<<s<<std::endl;
+}
+
 void hendler_1(cl_base* p_ob, std::string& s) {
     int c=0;
 	for (cl_base* child : p_ob->get_children())
 		if ( child->get_value()== "1")
         {
-            p_ob->set_connect(SIGNAL_D(signal), child, HENDLER_D(hendler_2));
+            p_ob->set_connect(SIGNAL_D(cl_application::signal_1), child, HENDLER_D(hendler_2));
             c++;
         }
-     if(c) p_ob->emit_signal(SIGNAL_D(signal), p_ob->get_value());
-     else p_ob->emit_signal(SIGNAL_D(signal_2), p_ob->get_value());
+     if(c) p_ob->emit_signal(SIGNAL_D(cl_application::signal_1), p_ob->get_value());
+     else p_ob->emit_signal(SIGNAL_D(cl_application::signal_2), p_ob->get_value());
 }
 void hendler_2(cl_base* p_ob, std::string& s) {
 	hendler_1(p_ob, s);
