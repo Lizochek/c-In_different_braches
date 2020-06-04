@@ -46,19 +46,18 @@ void cl_application::bild_tree_objects()
 }
 
 
-/*void dfs(cl_base* v, int deep)
+void dfs(cl_base* v)
 {
-	for (int i = 0; i < deep; i++) cout << " ";
-	cout << v->get_name() << endl;
-	for (cl_base* child : v->get_children())
-		dfs(child, deep + 1);
-}
-*/
 
+	cout << endl << "The object " << v->get_name() << " is " << (v->get_state() > 0 ? "ready" : "not ready");
+	for (cl_base* child : v->get_children())
+		dfs(child);
+}
 int cl_application::exec_app()
 {
-	//dfs(this, 0);
-	 queue<cl_base*> q;
+	cout << "Test result";
+	dfs(this);
+	/*queue<cl_base*> q;
 	q.push(this);
 	while (!q.empty())
 	{
@@ -71,7 +70,7 @@ int cl_application::exec_app()
 	cout << "The object " << v->get_name() << " is ";
 	cout << (v->get_state() > 0 ? "ready" : "not ready") << endl;
 	}
-
+	*/
 	return 0;
 }
 int const cl_application::get_class() { return 1; }
